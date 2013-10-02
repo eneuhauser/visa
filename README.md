@@ -13,6 +13,13 @@ A local node application to work with [VML's](http://www.vml.com) internal forum
 1. From the installation directory, run `node visa.js`
 2. Follow the prompts on the screen.
 3. Whenever you save your document, the post will be updated.
+4. To quite Visa, press ctrl+c
+
+## Known Issues
+
++ You must create the post first. Be sure to choose the Markdown option and put something in the body for it to persist.
++ Posts marked as not published will be published on save.
+
 
 ## Future Enhancements
 
