@@ -10,15 +10,14 @@ A local node application to work with [VML's](http://www.vml.com) internal forum
 
 ## Usage
 
-1. From the installation directory, run `node visa.js`
+1. From the installation directory, run `node visa`
 2. Follow the prompts on the screen.
 3. Whenever you save your document, the post will be updated.
-4. To quite Visa, press ctrl+c
+4. To quite Visa, press `ctrl`+`c`
 
 ## Known Issues
 
 + You must create the post first. Be sure to choose the Markdown option and put something in the body for it to persist.
-+ Posts marked as not published will be published on save.
 
 
 ## Future Enhancements
@@ -26,7 +25,7 @@ A local node application to work with [VML's](http://www.vml.com) internal forum
 + Include meta data to update title, tags, etc using MultiMarkdown syntax
 + Create new posts
 + On startup, read the *posts* directory looking for any `\d+.md` files to watch
-+ After retrieving one post, have a prompt ready to ask for another.
++ After retrieving one post, have the prompt ready to ask for another.
 + Update bio pages
 
 ## Markdown Editors
