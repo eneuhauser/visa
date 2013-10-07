@@ -1,6 +1,6 @@
 {
   "name": "visa",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "request": "2.27.x",
 	"form-data": "0.1.1",
