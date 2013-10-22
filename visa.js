@@ -53,6 +53,7 @@ _.extend(Visa.prototype, {
 	}
 });
 
+prompt.colors = false;
 prompt.get([
 	{
 		name: 'username',
