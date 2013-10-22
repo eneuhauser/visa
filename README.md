@@ -15,18 +15,24 @@ A local node application to work with [VML's](http://www.vml.com) internal forum
 3. Whenever you save your document, the post will be updated.
 4. To quite Visa, press `ctrl`+`c`
 
+## Features
+
++ **Metadata Support:** the following metadata attributes are supported. Metadata must be the first line of the file and listed until the first empty line.
+  - **Title:** Post Title
+  - **Affiliation:** Post Group(s). Includes full group name. Comma or line separated.
+  - **Keywords:** Post tags. Comma or line separated.
+  - **Format:** If set to *draft*, saved as not published; otherwise, published.
+
 ## Known Issues
 
 + You must create the post first. Be sure to choose the Markdown option and put something in the body for it to persist.
 
-
 ## Future Enhancements
 
-+ Include meta data to update title, tags, etc using MultiMarkdown syntax
 + Create new posts
 + On startup, read the *posts* directory looking for any `\d+.md` files to watch
 + After retrieving one post, have the prompt ready to ask for another.
-+ Update bio pages
++ Update bio pages. Pass **bio** as the post ID to load the bio page. Files marked **bio.md** will be saved to user's bio page.
 
 ## Markdown Editors
 
