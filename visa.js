@@ -45,6 +45,9 @@ _.extend(Visa.prototype, {
 	watchPost: function(postId, file) {
 		var passport = this.passport;
 		fs.watchFile(file, function(curr, prev) {
+			if(curr.mtime === prev.mtime) {
+				return;
+			}
 			// TODO Potentially check if there is a newer version and if the file really changed
 			fs.readFile(file, 'utf-8', function(err, text) {
 				passport.putPost(postId, text);
