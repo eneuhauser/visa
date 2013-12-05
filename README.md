@@ -11,25 +11,26 @@ A local node application to work with [VML's](http://www.vml.com) internal forum
 ## Usage
 
 1. From the installation directory, run `node visa`
-2. Follow the prompts on the screen.
+2. Follow the prompts on the screen. To create a new post, leave the Post ID empty.
 3. Whenever you save your document, the post will be updated.
 4. To quite Visa, press `ctrl`+`c`
 
 ## Features
 
++ Now able to create new posts by leaving the post ID blank.
 + **Metadata Support:** the following metadata attributes are supported. Metadata must be the first line of the file and listed until the first empty line.
   - **Title:** Post Title
-  - **Affiliation:** Post Group(s). Includes full group name. Comma or line separated.
+  - **Affiliation:** Post Group(s). Includes full group name. Comma or line separated. Requires Group ID to set the group.
   - **Keywords:** Post tags. Comma or line separated.
   - **Format:** If set to *draft*, saved as not published; otherwise, published.
 
 ## Known Issues
 
-+ You must create the post first. Be sure to choose the Markdown option and put something in the body for it to persist.
++ Posts are sometimes saved to Passport without saving the file. This is an issue with Nodes [fs.watchFile](http://nodejs.org/api/fs.html#fs_fs_watchfile_filename_options_listener).
++ Markdown format not being set on new files
 
 ## Future Enhancements
 
-+ Create new posts
 + On startup, read the *posts* directory looking for any `\d+.md` files to watch
 + After retrieving one post, have the prompt ready to ask for another.
 + Update bio pages. Pass **bio** as the post ID to load the bio page. Files marked **bio.md** will be saved to user's bio page.
