@@ -6,7 +6,8 @@
 	"form-data": "0.1.1",
 	"cheerio": "0.12.2",
 	"lodash": "2.2.0",
-	"prompt": "0.2.11"
+	"prompt": "0.2.11",
+	"mkdirp": "0.3.5"
   },
   "devDependencies": {},
   "engines": {
