@@ -17,23 +17,23 @@ A local node application to work with [VML's](http://www.vml.com) internal forum
 
 ## Features
 
-+ Now able to create new posts by leaving the post ID blank.
++ Create new posts by leaving the post ID blank.
 + **Metadata Support:** the following metadata attributes are supported. Metadata must be the first line of the file and listed until the first empty line.
   - **Title:** Post Title
-  - **Affiliation:** Post Group(s). Includes full group name. Comma or line separated. Requires Group ID to set the group.
+  - **Affiliation:** Post Group(s). Comma or line separated. Only the Group ID is required to set the group. The full name must still contain the group ID.
   - **Keywords:** Post tags. Comma or line separated.
-  - **Format:** If set to *draft*, saved as not published; otherwise, published.
+  - **Format:** *draft* or *complete*. If set to *draft*, saved as not published; otherwise, published.
 
 ## Known Issues
 
 + Posts are sometimes saved to Passport without saving the file. This is an issue with Nodes [fs.watchFile](http://nodejs.org/api/fs.html#fs_fs_watchfile_filename_options_listener).
-+ Markdown format not being set on new files
 
 ## Future Enhancements
 
 + On startup, read the *posts* directory looking for any `\d+.md` files to watch
 + After retrieving one post, have the prompt ready to ask for another.
 + Update bio pages. Pass **bio** as the post ID to load the bio page. Files marked **bio.md** will be saved to user's bio page.
++ Update groups *info* and *tools* pages.
 
 ## Markdown Editors
 
