@@ -33,10 +33,10 @@ _.extend(Visa.prototype, {
 			file.onSave(function(text) {
 				// TBD Potentially have promise save once loaded
 				if(file.loading) { return; }
-				file.loading = true;
 				if(file.postId) {
 					passport.putPost(file.postId, text);
 				} else {
+					file.loading = true;
 					passport.addPost(text, function(postId) {
 						file.postId = postId;
 						file.loading = false;
