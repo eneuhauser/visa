@@ -13,44 +13,48 @@ var _ = require('lodash'),
 	CAS = require('./lib/cas'),
 	Passport = require('./lib/passport'),
 	prompt = require('prompt'),
-	fs = require('fs'),
+	File = require('./lib/file'),
 	exec = require('child_process').exec;
 
 function Visa() { this.init.apply(this, arguments); }
+Visa.POST_FOLDER = 'posts';
 _.extend(Visa.prototype, {
 	init: function(cas) {
 		this.passport = new Passport(cas);
 	},
-	post: function(postId) {
-		var folder = 'posts';
-		var file = folder + '/' + postId + '.md';		
+	createPost: function() {
+		var file = new File(Visa.POST_FOLDER + '/_' + new Date().getTime() + '.md');
 		var passport = this.passport;
-		var visa = this;
-		fs.exists(folder, function(exists) {
-			if(!exists) {
-				fs.mkdirSync(folder);
-			}
-			passport.getPost(postId, function(response) {
-				fs.writeFile(file, response, function(err) {
-					if(err) {
-						console.error('Could not write file', err);
-						return;
-					}
-					exec('open ' + file);
-					visa.watchPost(postId, file);
-				});
+		var text = passport.createPost();
+		file.loading = false;
+		file.postId = null;
+		file.write(text, function() {
+			exec('open ' + file.path);
+			file.onSave(function(text) {
+				// TBD Potentially have promise save once loaded
+				if(file.loading) { return; }
+				file.loading = true;
+				if(file.postId) {
+					passport.putPost(file.postId, text);
+				} else {
+					passport.addPost(text, function(postId) {
+						file.postId = postId;
+						file.loading = false;
+					});
+				}
 			});
 		});
 	},
-	watchPost: function(postId, file) {
+	editPost: function(postId) {
+		var file = new File(Visa.POST_FOLDER + '/' + postId + '.md');
 		var passport = this.passport;
-		fs.watchFile(file, function(curr, prev) {
-			if(curr.mtime === prev.mtime) {
-				return;
-			}
-			// TODO Potentially check if there is a newer version and if the file really changed
-			fs.readFile(file, 'utf-8', function(err, text) {
-				passport.putPost(postId, text);
+		passport.getPost(postId, function(response) {
+			file.write(response, function() {
+				exec('open ' + file.path);
+				file.onSave(function(text) {
+					// TODO Potentially check if there is a newer version and if the file really changed
+					passport.putPost(postId, text);
+				});
 			});
 		});
 	}
@@ -61,6 +65,7 @@ prompt.get([
 	{
 		name: 'username',
 		description: 'Username:',
+		required: true
 	},
 	{
 		name: 'password',
@@ -76,6 +81,8 @@ prompt.get([
 	var cas = new CAS('https://cas.vml.com', result.username, result.password);
 	var visa = new Visa(cas);
 	if(result.postId) {
-		visa.post(result.postId);
+		visa.editPost(result.postId);
+	} else {
+		visa.createPost();
 	}
 });
