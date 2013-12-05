@@ -23,6 +23,9 @@ A local node application to work with [VML's](http://www.vml.com) internal forum
   - **Affiliation:** Post Group(s). Comma or line separated. Only the Group ID is required to set the group. The full name must still contain the group ID.
   - **Keywords:** Post tags. Comma or line separated.
   - **Format:** *draft* or *complete*. If set to *draft*, saved as not published; otherwise, published.
++ Command line options: pass the following optional items on startup (i.e. node visa -q -a Textmate)
+  - **q** Suppresses the metadata when editing existing posts.
+  - **a** Works like open -a *AppName* to specify an app rather than using default app.
 
 ## Known Issues
 

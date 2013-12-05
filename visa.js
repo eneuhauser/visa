@@ -16,11 +16,35 @@ var _ = require('lodash'),
 	File = require('./lib/file'),
 	exec = require('child_process').exec;
 
+var app = null, hideMetaData = false;
+
+(function(args) {
+	var index, total;
+	for(index=0, total=args.length; index<total; ++index) {
+		switch(args[index]) {
+			case '-a' :
+				app = args[++index];
+				break;
+			case '-q' :
+				hideMetaData = true;
+				break;
+		}
+	}
+})(process.argv);
+
+function open(file) {
+	if(app) {
+		exec('open -a ' + app + ' ' + file);
+	} else {
+		exec('open ' + file);
+	}
+}
+
 function Visa() { this.init.apply(this, arguments); }
 Visa.POST_FOLDER = 'posts';
 _.extend(Visa.prototype, {
 	init: function(cas) {
-		this.passport = new Passport(cas);
+		this.passport = new Passport(cas, hideMetaData);
 	},
 	createPost: function() {
 		var file = new File(Visa.POST_FOLDER + '/_' + new Date().getTime() + '.md');
@@ -29,7 +53,7 @@ _.extend(Visa.prototype, {
 		file.loading = false;
 		file.postId = null;
 		file.write(text, function() {
-			exec('open ' + file.path);
+			open(file.path);
 			file.onSave(function(text) {
 				// TBD Potentially have promise save once loaded
 				if(file.loading) { return; }
@@ -50,7 +74,7 @@ _.extend(Visa.prototype, {
 		var passport = this.passport;
 		passport.getPost(postId, function(response) {
 			file.write(response, function() {
-				exec('open ' + file.path);
+				open(file.path);
 				file.onSave(function(text) {
 					// TODO Potentially check if there is a newer version and if the file really changed
 					passport.putPost(postId, text);
